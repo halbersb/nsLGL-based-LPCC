@@ -4,7 +4,7 @@ function collect_and_calculate
 % this function collects the SHD and F1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-alg={'After_Weights','After_Sliding','After_LPCC','After_SEM_DBN','After_TLGL'};
+alg={'After_Weights','After_Sliding','After_LPCC','After_SEM_DBN','After_LTGL'};
 path1='databases\';
 path2='after_databases\';
 

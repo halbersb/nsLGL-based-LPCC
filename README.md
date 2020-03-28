@@ -10,4 +10,4 @@ To run the code:
 
 
 
-**To run the "latent variable time-varying graphical lasso" (TLGL) go to git "fdtomasi/regain"
+**To run the "latent variable time-varying graphical lasso" (LTGL) go to git "fdtomasi/regain"
