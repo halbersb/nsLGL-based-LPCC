@@ -1,4 +1,4 @@
-function wrapper_nsLGL_based_LPCC(G,C,E,S,alg,window,jump,flag,varargin)
+function wrapper_LPCC_based_nsLGL(G,C,E,S,alg,window,jump,flag,varargin)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % run wrapper

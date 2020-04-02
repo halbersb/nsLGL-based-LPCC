@@ -1,5 +1,5 @@
-# nsLGL-based-LPCC
-non-stationary local-to-global learning-based LPCC
+# LPCC_based_nsLGL
+LPCC-based non-stationary local-to-global learning
 implemented in Matlab.
 
 This package includes all the relevant dependencies
