@@ -55,18 +55,17 @@ for p=1:data_perm
     
     load(['databases' sign 'G' int2str(G) sign file_name sign file_name '_' int2str(p) '.mat']); 
     data=data(1:0.9*size(data,1),:); %leave the last 10% for data imputation (testing/evaluation)
-    final_2TBN=[];init_2TBN=[];
+    TBN=[];final_2TBN=[];init_2TBN=[];pdags=[];
     
     switch alg,
         case 1
             %run SEM-DBN
             if p==1, save_path=[save_path 'After_SEM_DBN' sign]; end
             if ~flag
-                [final_2TBN,init_2TBN,~,~]=learn_struct_dbn_EM(mk_random_2TBN(num_var_slice,num_obs_slice,1,G*E*S*p),data,node_sizes,num_var_slice-num_obs_slice,10,1);
+                [TBN,init_2TBN,~,~]=learn_struct_nsdbn_EM(mk_random_2TBN(num_var_slice,num_obs_slice,1,1,G*E*S*p),data,node_sizes,num_var_slice-num_obs_slice,10,1);
             else
                 load([save_path file_name sign file_name '_' int2str(p) '.mat']);
             end
-            pdags=[];
         case 2
             %run LPCC per slice
             if p==1, save_path=[save_path 'After_LPCC' sign]; end
@@ -87,6 +86,11 @@ for p=1:data_perm
     end
     
     if ~exist([save_path file_name],'dir'), mkdir([save_path file_name]); end
-    save([save_path file_name sign file_name '_' int2str(p) '.mat'],'final_2TBN','init_2TBN','pdags');
+    switch alg,
+        case 1
+            save([save_path file_name sign file_name '_' int2str(p) '.mat'],'TBN','init_2TBN','pdags');
+        case 2
+            save([save_path file_name sign file_name '_' int2str(p) '.mat'],'final_2TBN','init_2TBN','pdags');
+    end
 
 end

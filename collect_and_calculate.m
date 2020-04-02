@@ -90,6 +90,7 @@ header=cell(1,2*length(alg));
 for i=1:length(alg), header{i}=['SHD_' alg{i}]; end
 for i=1:length(alg), header{length(alg)+i}=['F1_' alg{i}]; end
 fig=figure('Position',[500,500,1050,350]);
-uit=uitable(fig,'Data',FinalTable,'ColumnName',header);
+SFinalTable=reshape(cellstr(num2str(FinalTable(:),'%.4f')),size(FinalTable));
+uit=uitable(fig,'Data',SFinalTable,'ColumnName',header);
 uit.Position=[20,20,1010,310];
 save('SHD_results.mat','FinalTable');

@@ -1,21 +1,22 @@
-function dag = mk_random_2TBN(N,num_obs,PMM_ind,my_seed)
+function dag = mk_random_2TBN(N,num_obs,PMM_ind,flag,my_seed)
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % create a random 2TBN (DBN)
 %
 % input:
 % [N]       - (scalar) number of variables per slice
 % [num_obs] - (scalar) number of observed variables per slice
 % [PMM_ind] - (scalar) indicator to init a pure structure
+% [flag]    - [scalar] if 1 put latent at the end of the matrix
 % [my_seed] - [scalar] my seed for randomness
 %
 % output:
 % dag     - [matrix] 2TBN
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 num_lat=N-num_obs;
 lat_ind=1:num_lat;
-if nargin<4, my_seed=1234; end
+if nargin<5, my_seed=1234; end
 rng(my_seed,'twister');
 
 if PMM_ind
@@ -39,7 +40,9 @@ else
             slice_dag(lat_ind(i),to)=1;
         end
     end
-end 
+end
+%validate at least a single edge
+if isempty(find(slice_dag)), slice_dag(1,num_lat+unidrnd(num_obs))=1; end
 
 %convert to 2-TBN
 dag=slice_dag;
@@ -56,11 +59,11 @@ if num_lat>1
 end
 
 %move latent variables to the end of the matrix
-%if num_lat>0
-%    temp=dag(:,[1:num_lat (N+1):(N+num_lat)]);
-%    dag(:,[1:num_lat (N+1):(N+num_lat)])=[];
-%    dag(:,end+1:end+num_lat*2)=temp;
-%    temp=dag([1:num_lat (N+1):(N+num_lat)],:);
-%    dag([1:num_lat (N+1):(N+num_lat)],:)=[];
-%    dag(end+1:end+num_lat*2,:)=temp;
-%end
+if flag && num_lat>0
+    temp=dag(:,[1:num_lat (N+1):(N+num_lat)]);
+    dag(:,[1:num_lat (N+1):(N+num_lat)])=[];
+    dag(:,end+1:end+num_lat*2)=temp;
+    temp=dag([1:num_lat (N+1):(N+num_lat)],:);
+    dag([1:num_lat (N+1):(N+num_lat)],:)=[];
+    dag(end+1:end+num_lat*2,:)=temp;
+end
