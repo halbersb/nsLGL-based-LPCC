@@ -14,3 +14,5 @@ data should be in the format: (S,O*T)
 where S in the number of sequences, O is the number of observed variables, and T is the number of time-slices
 
 **To run the "latent variable time-varying graphical lasso" (LTGL) go to git "fdtomasi/regain"
+
+running example.xlsx demonstrates how LPCC-based nsLGL algorithm transforms local graphs into a global nsDBN
