@@ -103,51 +103,6 @@ groups=clean_groups(groups);
 [groups1]=merge_groups(groups1,unique(cell2mat(groups2)),num_obs_per_slice);
 [groups2]=merge_groups(groups2,unique(cell2mat(groups1)),num_obs_per_slice);
 groups=[groups1 groups2];
-
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % stage 2.1: find unconnected obvserved variables and try to connect them
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 
-% unconnected=[];
-% for i=1:num_obs
-%     flag=0;
-%     for j=1:length(groups)
-%         if ismember(i,groups{j})
-%             flag=1;
-%         end
-%     end
-%     if ~flag, unconnected=[unconnected i]; end
-% end
-% %try to connect unconnected obvserved variables 
-% for i=1:length(unconnected)
-%     if unconnected(i)<=num_obs_per_slice
-%         %unconnected variable is in slice 1
-%         to_check=unconnected(i)+num_obs_per_slice;
-%         for j=1:length(groups2) %search in slice 2
-%             if ismember(to_check,groups2{j})
-%                 %serach for the most similar group
-%                 ind=find_most_similar_mso(groups2{j}-num_obs_per_slice,groups1);
-%                 if ~isempty(ind)
-%                     groups1{ind}=sort([groups1{ind} unconnected(i)]); %add to the relevant group
-%                     break;
-%                 end
-%             end
-%         end
-%     else
-%         to_check=unconnected(i)-num_obs_per_slice;
-%         for j=1:length(groups1) %search in slice 1
-%             if ismember(to_check,groups1{j})
-%                 %serach for the most similar group
-%                 ind=find_most_similar_mso(groups1{j}+num_obs_per_slice,groups2);
-%                 if ~isempty(ind)
-%                     groups2{ind}=sort([groups2{ind} unconnected(i)]); %add to the relevant group
-%                     break;
-%                 end
-%             end
-%         end
-%     end
-% end
-% groups=[groups1 groups2];
 groups=handle_observed_collider(groups,closest_nbrs,num_obs);
 [groups1,groups2]=split_groups(groups,num_obs_per_slice); %split again to slice 1 and slice 2
 
